@@ -75,7 +75,7 @@
 This python file defines the machine learning pipeline that performs features engineering and the classifier that fits the RevoScalePy binary logistic regression.
 
 ####  runner.sql
-This python file defines the startup code and main method from which to excecute the solution.
+このPythonファイルは、ソリューションを実行するための起動コードとメインメソッドを定義します。
 
 ####  setup.sql
 Restores the sample DB (Make sure to update the path to the .bak file)
