@@ -52,8 +52,6 @@
 ## サンプルの実行
 1. SQL Server Management Studio から SQL Server 2017 のデータベースに接続し、Setup.sql の実行によってダウンロードしてきたバックアップファイルをリストアします。
 
-   *  参考：[SQL Server 2017 In-Database Python を使ってみた](https://blogs.msdn.microsoft.com/dataplatjp/2017/05/29/sqlserver2017-in-database-python/)
-
 2. Python Tools for Visual Studio のツールメニューから python tools command を開き、Machine Learning Services の Python 環境へのパスを設定してください。https://docs.microsoft.com/en-us/visualstudio/python/python-environments
 
    *  "C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\PYTHON_SERVICES" Machine Learning Services（データベース内）でインストールしている場合

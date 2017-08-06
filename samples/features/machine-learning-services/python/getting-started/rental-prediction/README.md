@@ -40,6 +40,7 @@ To run this sample, you need the following prerequisites: </br>
 
 <!-- Examples -->
 1. [SQL Server 2017 CTP2.0](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (or higher) with Machine Learning Services (Python) installed
+   *  参考：[SQL Server 2017 In-Database Python を使ってみた](https://blogs.msdn.microsoft.com/dataplatjp/2017/05/29/sqlserver2017-in-database-python/)
 2. [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
 3. [Python Tools for Visual Studio](https://www.visualstudio.com/vs/python/) or another Python IDE
 
