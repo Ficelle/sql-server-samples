@@ -32,6 +32,8 @@
 - **機能:** SQL Server Machine Learning Services 
 - **ワークロード:** SQL Server Machine Learning Services
 - **プログラム言語:** Python, TSQL
+- **著者:** Yassine Khelifi
+- **更新履歴:** Tomoyuki Oota（日本語化 ＆ 日本参考語ページのリンク追加）
 
 
 
