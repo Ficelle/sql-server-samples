@@ -28,7 +28,7 @@
 
 
 
-- **対象:** SQL Server 2017 CTP2.0 or higher
+- **対象:** SQL Server 2017 CTP2.0 以降
 - **機能:** SQL Server Machine Learning Services 
 - **ワークロード:** SQL Server Machine Learning Services
 - **プログラム言語:** Python, TSQL
