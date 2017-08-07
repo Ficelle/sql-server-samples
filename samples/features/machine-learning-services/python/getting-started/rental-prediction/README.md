@@ -62,13 +62,13 @@
 
 このサンプルでは、Pythonで予測モデルを作成し、それをSQL Server Machine Learning Servicesを使用してSQL Serverに展開する方法を示します。
 
-### rental_prediction.py
+### [rental_prediction.py](rental_prediction.py)
 予測モデルを生成し、それを使用してレンタル数を予測するPythonスクリプトです。
 
-###  rental_prediction.sql
+###  [rental_prediction.sql](rental_prediction.sql)
 rent_prediction.pyの処理をSQL Server内に展開（トレーニング用のストアドプロシージャとテーブルの作成、モデルの保存、予測用のストアドプロシージャの作成）します。
 
-###  setup.sql
+###  [setup.sql](setup.sql)
 バックアップファイルをリストアします（ファイルパスをダウンロードしたパスに置き換えてください）。
 
 ## 参考
