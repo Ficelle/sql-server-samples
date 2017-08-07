@@ -72,7 +72,7 @@ rent_prediction.pyの処理をSQL Server内に展開（トレーニング用の�
 バックアップファイルをリストアします（ファイルパスをダウンロードしたパスに置き換えてください）。
 
 ## 参考
-[Build a predictive model using Python and SQL Server ML Services](Build a predictive model using Python and SQL Server ML Services)
+[Build a predictive model using Python and SQL Server ML Services](https://microsoft.github.io/sql-ml-tutorials/python/rentalprediction/)
 
 
 
