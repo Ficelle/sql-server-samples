@@ -1,74 +1,71 @@
-# Build a predictive model with Python using SQL Server 2017 Machine Learning Services
+# Pythonで予測モデルを作成し、SQL Server Machine Learning Servicesを使用して予測モデルをSQL Serverに展開する
 
-This sample shows how to create a predictive model in Python and operationalize it with SQL Server 2017
+このサンプルはPythonで予測モデルを作成し、それをSQL Server 2017で操作する方法を示しています。
 
-### Contents
-
-[About this sample](#about-this-sample)<br/>
-[Before you begin](#before-you-begin)<br/>
-[Sample details](#sample-details)<br/>
+### コンテンツ
 
 
+[このサンプルについて](#このサンプルについて)
 
-<a name=about-this-sample></a>
+[はじめに](#はじめに)
 
-## About this sample
+[サンプルの実行](#サンプルの実行)
 
-Predictive modeling is a powerful way to add intelligence to your application. It enables applications to predict outcomes against new data.
-The act of incorporating predictive analytics into your applications involves two major phases: 
-model training and model operationalization.
+[サンプル詳細](#サンプル詳細)
 
-In this sample, you will learn how to create a predictive model in python and operationalize it with SQL Server vNext.
+
+
+## このサンプルについて
+
+予測モデリングはアプリケーションにインテリジェンスを追加する強力な方法で、アプリケーションは新しいデータに対する結果を予測することができます。
+予測分析をアプリケーションに組み込むには「モデル訓練」と「モデル操作」の大きく2つの段階があります。
+
+このサンプルでは、Pythonで予測モデルを作成、SQL Server 2017で予測モデルを操作の２点を学習します。
 
 
 <!-- Delete the ones that don't apply -->
-- **Applies to:** SQL Server 2017 CTP2.0 or higher
-- **Key features:** SQL Server Machine Learning Services 
-- **Workload:** SQL Server Machine Learning Services
-- **Programming Language:** T-SQL, Python
-- **Authors:** Nellie Gustafsson
-- **Update history:** Getting started tutorial for SQL Server ML Services - Python 
+- **対象:** SQL Server 2017 CTP2.0（もしくはそれ以降）
+- **機能:** SQL Server Machine Learning Services 
+- **ワークロード:** SQL Server Machine Learning Services
+- **プログラム言語:** Python, TSQL
+- **著者:** Nellie Gustafsson
+- **更新履歴:** Tomoyuki Oota（日本語化 ＆ 日本参考語ページのリンク追加）
 
-<a name=before-you-begin></a>
+## はじめに
 
-## Before you begin
+このサンプルを実行するためには以下の事前準備が必要です：
+1. [このバックアップファイルをダウンロードし](https://deve2e.azureedge.net/sqlchoice/static/TutorialDB.bak) Setup.sqlを利用しリストアを実行してください. 
 
-To run this sample, you need the following prerequisites: </br>
-[Download this DB backup file](https://deve2e.azureedge.net/sqlchoice/static/TutorialDB.bak) and restore it using Setup.sql. 
-
-**Software prerequisites:**
-
-<!-- Examples -->
-1. [SQL Server 2017 CTP2.0](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (or higher) with Machine Learning Services (Python) installed
+**ソフトウェア要件:**
+1. [SQL Server 2017 CTP2.0](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (もしくはそれ以降) と Machine Learning Services (Python) がインストールされていること
    *  参考：[SQL Server 2017 In-Database Python を使ってみた](https://blogs.msdn.microsoft.com/dataplatjp/2017/05/29/sqlserver2017-in-database-python/)
-2. [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
-3. [Python Tools for Visual Studio](https://www.visualstudio.com/vs/python/) or another Python IDE
+2. [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)がインストールされていること
+3. [Python Tools for Visual Studio](https://www.visualstudio.com/vs/python/) もしくはその他の Python IDE がインストールされていること
 
-## Run this sample
-1. From SQL Server Management Studio, or SQL Server Data Tools, connect to your SQL Server 2017 database and execute setup.sql to restore the sample DB you have downloaded </br>
-2. From SQL Server Management Studio or SQL Server Data Tools, open the rental_prediction.sql script </br>
-This script sets up: </br>
-Necessary tables </br>
-Creates stored procedure to train a model </br>
-Creates a stored procedure to predict using that model </br>
-Saves the predicted results to a DB table </br>
-3. You can also try the Python script on its own, connecting to SQL Server and getting data using RevoScalePy Rx functions. Just remember to point the Python environment to the corresponding path "C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\PYTHON_SERVICES" if you run in-db Python Server, or 
-"C:\Program Files\Microsoft SQL Server\140\PYTHON_SERVER" if you have the standalone Machine Learning Server installed.
+## サンプルの実行
+1. SQL Server Management Studio から SQL Server 2017 のデータベースに接続し、Setup.sql の実行によってダウンロードしてきたバックアップファイルをリストアします。
+2. SQL Server Management Studio から rental_prediction.sql を開きます。
+このスクリプトは以下を実行します。
+   *  2-1.必要なテーブルの作成
+   *  2-2.モデル訓練のためのストアドプロシージャ作成
+   *  2-3.訓練モデルによる予測実行のためのストアドプロシージャ作成
+   *  2-4.予測結果をデータベース内のテーブルに保存
+3. 同じ処理をPythonスクリプトで実行することもできます。このスクリプトはSQL Serverに接続し、RevoScalePy Rx 関数によってデータを取得しています。Pythonスクリプトで実行する場合は適切なPython環境パスを指定することに注意してください。
+   *  "C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\PYTHON_SERVICES" Machine Learning Services（データベース内）でインストールしている場合
+   *  "C:\Program Files\Microsoft SQL Server\140\PYTHON_SERVER" Machine Learning Services（スタンドアロン）でインストールしている場合
 
-<a name=sample-details></a>
+## サンプル詳細
 
-## Sample details
-
-This sample shows how to create a predictive model with Python and generate predictions using the model and deploy that in SQL Server with SQL Server Machine Learning Services. 
+このサンプルでは、Pythonで予測モデルを作成し、SQL Server Machine Learning Servicesを使用して予測モデルをSQL Serverに展開する方法を示します。
 
 ### rental_prediction.py
-The Python script that generates a predictive model and uses it to predict rental counts
+予測モデルを生成し、それを使用してレンタル数を予測するPythonスクリプトです。
 
 ###  rental_prediction.sql
-Takes the Python code in rental_prediction.py and deploys it inside SQL Server. Creating stored procedures and tables for training, storing models and creating stored procedures for prediction.
+rent_prediction.pyの処理をSQL Server内に展開（トレーニング用のストアドプロシージャとテーブルの作成、モデルの保存、予測用のストアドプロシージャの作成）します。
 
 ###  setup.sql
-Restores the sample DB (Make sure to update the path to the .bak file)
+バックアップファイルをリストアします（ファイルパスをダウンロードしたパスに置き換えてください）。
 
 
 
