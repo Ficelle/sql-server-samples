@@ -33,7 +33,7 @@
 - **ワークロード:** SQL Server Machine Learning Services
 - **プログラム言語:** Python, TSQL
 - **著者:** Yassine Khelifi
-- **更新履歴:** Tomoyuki Oota（日本語化 ＆ 日本参考語ページのリンク追加）
+- **更新履歴:** Tomoyuki Oota（日本語化、説明補足、参考情報のリンク追加）
 
 
 
@@ -46,6 +46,7 @@
 
 
 1. [SQL Server 2017 CTP2.0](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (もしくはそれ以降) と Machine Learning Services (Python) がインストールされていること
+   *  参考：[SQL Server 2017 In-Database Python を使ってみた](https://blogs.msdn.microsoft.com/dataplatjp/2017/05/29/sqlserver2017-in-database-python/)
 2. [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)がインストールされていること
 3. [Python Tools for Visual Studio](https://www.visualstudio.com/vs/python/) もしくはその他の Python IDE がインストールされていること
 
