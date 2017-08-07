@@ -45,15 +45,15 @@
 ## サンプルの実行
 1. SQL Server Management Studio から SQL Server 2017 のデータベースに接続し、Setup.sql の実行によってダウンロードしてきたバックアップファイルをリストアします。
 2. SQL Server 2017 内でPython実行を有効化するためのインスタンス設定を行い、SQL Server 2017を再起動します。
-   *  2-1.EXEC sp_configure 'external scripts enabled', 1;
-   *  2-2.RECONFIGURE WITH OVERRIDE
-   *  2-3.SQL Server 2017を再起動
+   *  EXEC sp_configure 'external scripts enabled', 1;
+   *  RECONFIGURE WITH OVERRIDE
+   *  SQL Server 2017を再起動
 3. SQL Server Management Studio から rental_prediction.sql を開きます。
-このスクリプトは以下を実行します。
-   *  3-1.必要なテーブルの作成
-   *  3-2.モデル訓練のためのストアドプロシージャ作成
-   *  3-3.訓練モデルによる予測実行のためのストアドプロシージャ作成
-   *  3-4.予測結果をデータベース内のテーブルに保存
+このスクリプトは以下を実行しています。
+   *  必要なテーブルの作成
+   *  モデル訓練のためのストアドプロシージャ作成
+   *  訓練モデルによる予測実行のためのストアドプロシージャ作成
+   *  予測結果をデータベース内のテーブルに保存
 4. 同じ処理をPythonスクリプトで実行することもできます。このスクリプトはSQL Serverに接続し、RevoScalePy Rx 関数によってデータを取得しています。Pythonスクリプトで実行する場合は適切なPython環境パスを指定することに注意してください。
    *  "C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\PYTHON_SERVICES" Machine Learning Services（データベース内）でインストールしている場合
    *  "C:\Program Files\Microsoft SQL Server\140\PYTHON_SERVER" Machine Learning Services（スタンドアロン）でインストールしている場合
