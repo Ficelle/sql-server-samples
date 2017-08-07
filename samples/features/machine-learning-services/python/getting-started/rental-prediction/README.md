@@ -29,7 +29,7 @@
 - **ワークロード:** SQL Server Machine Learning Services
 - **プログラム言語:** Python, TSQL
 - **著者:** Nellie Gustafsson
-- **更新履歴:** Tomoyuki Oota（日本語化、説明補足、参考情報のリンク追加）
+- **更新履歴:** gho9o9（日本語化、説明補足、参考情報のリンク追加）
 
 ## はじめに
 
