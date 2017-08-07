@@ -1,4 +1,4 @@
-# Pythonした予測モデルをSQL Server Machine Learning Servicesを使用してSQL Serverに展開する
+# Pythonで作成した予測モデルをSQL Server Machine Learning Servicesを使用してSQL Serverに展開する
 
 このサンプルはPythonで予測モデルを作成し、それをSQL Server 2017で操作する方法を示しています。
 
