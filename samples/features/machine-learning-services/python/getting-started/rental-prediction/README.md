@@ -1,4 +1,4 @@
-# Pythonで予測モデルを作成し、SQL Server Machine Learning Servicesを使用して予測モデルをSQL Serverに展開する
+# Pythonした予測モデルをSQL Server Machine Learning Servicesを使用してSQL Serverに展開する
 
 このサンプルはPythonで予測モデルを作成し、それをSQL Server 2017で操作する方法を示しています。
 
@@ -60,7 +60,7 @@
 
 ## サンプル詳細
 
-このサンプルでは、Pythonで予測モデルを作成し、SQL Server Machine Learning Servicesを使用して予測モデルをSQL Serverに展開する方法を示します。
+このサンプルでは、Pythonで予測モデルを作成し、それをSQL Server Machine Learning Servicesを使用してSQL Serverに展開する方法を示します。
 
 ### rental_prediction.py
 予測モデルを生成し、それを使用してレンタル数を予測するPythonスクリプトです。
