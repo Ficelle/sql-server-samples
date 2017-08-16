@@ -34,7 +34,7 @@
 ## はじめに
 
 このサンプルを実行するためには以下の事前準備が必要です：
-1. [このバックアップファイルをダウンロードし](https://deve2e.azureedge.net/sqlchoice/static/TutorialDB.bak) Setup.sqlを利用しリストアを実行してください. 
+1. [このバックアップファイルをダウンロードし](https://github.com/gho9o9/sql-server-samples/raw/master/samples/features/machine-learning-services/python/getting-started/rental-prediction/TutorialDB.bak) Setup.sqlを利用しリストアを実行してください. 
 
 **ソフトウェア要件:**
 1. [SQL Server 2017 CTP2.0](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (もしくはそれ以降) と Machine Learning Services (Python) がインストールされていること
