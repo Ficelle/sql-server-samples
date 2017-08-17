@@ -1,9 +1,7 @@
-import pandas as pd
 import os
-
+import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
-
 from revoscalepy import RxSqlServerData
 from revoscalepy import rx_import
 
@@ -29,7 +27,7 @@ def get_rental_predictions():
             }
         }
 
-    data_source = RxSqlServerData(table="dbo.rental_data",
+    data_source = RxSqlServerData(sql_query="SELECT RentalCount, Year, Month, Day, WeekDay, Snow, Holiday FROM dbo.rental_data",
                                   connection_string=conn_str, column_info=column_info)
         
     # import data source and convert to pandas dataframe
