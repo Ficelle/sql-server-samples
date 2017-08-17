@@ -1,14 +1,15 @@
 import pandas as pd
+import os
+
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-from revoscalepy.computecontext.RxInSqlServer import RxInSqlServer
-from revoscalepy.computecontext.RxInSqlServer import RxSqlServerData
-from revoscalepy.etl.RxImport import rx_import_datasource
-
+from revoscalepy import RxSqlServerData
+from revoscalepy import rx_import
 
 def get_rental_predictions():
-    conn_str = 'Driver=SQL Server;Server=MYSQLSERVER;Database=TutorialDB;Trusted_Connection=True;'
+    sql_server = os.getenv('PYTEST_SQL_SERVER', '.')
+    conn_str = 'Driver=SQL Server;Server=' + sql_server + ';Database=TutorialDB;Trusted_Connection=True;'
     column_info = { 
             "Year" : { "type" : "integer" },
             "Month" : { "type" : "integer" }, 
@@ -29,18 +30,10 @@ def get_rental_predictions():
         }
 
     data_source = RxSqlServerData(table="dbo.rental_data",
-                                  connectionString=conn_str, colInfo=column_info)
-    computeContext = RxInSqlServer(
-        connectionString = conn_str,
-        numTasks = 1,
-        autoCleanup = False
-        )
-     
-    
-    RxInSqlServer(connectionString=conn_str, numTasks=1, autoCleanup=False)
-    
+                                  connection_string=conn_str, column_info=column_info)
+        
     # import data source and convert to pandas dataframe
-    df = pd.DataFrame(rx_import_datasource(data_source))
+    df = pd.DataFrame(rx_import(data_source))
     print("Data frame:", df)
     # Get all the columns from the dataframe.
     columns = df.columns.tolist()
@@ -61,9 +54,14 @@ def get_rental_predictions():
     lin_model.fit(train[columns], train[target])
     # Generate our predictions for the test set.
     lin_predictions = lin_model.predict(test[columns])
-    print("Predictions:", lin_predictions)
+    print("Predictions:", end="")
+    print(['{:.15f}'.format(n) for n in lin_predictions])
     # Compute error between our test predictions and the actual values.
     lin_mse = mean_squared_error(lin_predictions, test[target])
     print("Computed error:", lin_mse)
 
-get_rental_predictions()
+    #test['pred'] = lin_predictions
+    #print(test.loc[:,['RentalCount','pred']])
+
+if __name__ == "__main__":  
+    get_rental_predictions()
