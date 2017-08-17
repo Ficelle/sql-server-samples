@@ -12,10 +12,9 @@
 
 ## このサンプルについて
 
-このサンプルは[Build a predictive model using Python and SQL Server ML Services](https://microsoft.github.io/sql-ml-tutorials/python/rentalprediction/)を参考にしています。
-
-このサンプルのシナリオはスキーレンタル事業における将来のレンタル数を予測します。
-以下に示す過去のレンタル履歴のデータセットを元に予測モデルを作成します。
+このサンプルはSQL Server 2017で機械学習を実行します。
+シナリオはスキーレンタル事業における将来のレンタル数の予測です。
+以下に示す過去のレンタル履歴データセットを用います。
 
 |Year|Month|Day|WeekDay|Holiday|Snow|RentalCount|
 |:---|:---|:---|:---|:---|:---|:---|
@@ -42,6 +41,10 @@ rent_prediction.pyの処理をSQL Server内に展開（トレーニング用の�
 
 * [TutorialDB.bak](https://github.com/gho9o9/sql-server-samples/raw/master/samples/features/machine-learning-services/python/getting-started/rental-prediction/TutorialDB.bak)
 サンプルコードを実行するために必要なレンタル履歴データです。
+
+**出典:**
+
+この記事は[Build a predictive model using Python and SQL Server ML Services](https://microsoft.github.io/sql-ml-tutorials/python/rentalprediction/)をベースに作成しています。
 
 ## Step 1. 環境構築
 
