@@ -28,7 +28,7 @@
 
 
 
-- **対象:** SQL Server 2017 CTP2.0（もしくはそれ以降）
+- **対象:** SQL Server 2017 RC2（もしくはそれ以降）
 - **機能:** SQL Server Machine Learning Services 
 - **ワークロード:** SQL Server Machine Learning Services
 - **プログラム言語:** Python, TSQL
@@ -45,7 +45,7 @@
 **ソフトウェア要件:**
 
 
-1. [SQL Server 2017 CTP2.0](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (もしくはそれ以降) と Machine Learning Services (Python) がインストールされていること
+1. [SQL Server 2017 RC2](https://www.microsoft.com/en-us/sql-server/sql-server-2017) (もしくはそれ以降) と Machine Learning Services (Python) がインストールされていること
    *  参考：[SQL Server 2017 In-Database Python を使ってみた](https://blogs.msdn.microsoft.com/dataplatjp/2017/05/29/sqlserver2017-in-database-python/)
 2. [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)がインストールされていること
 3. [Python Tools for Visual Studio](https://www.visualstudio.com/vs/python/) もしくはその他の Python IDE がインストールされていること
