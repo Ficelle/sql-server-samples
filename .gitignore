@@ -71,3 +71,5 @@ samples/applications/iot-smart-grid/ConsoleClient/obj/Debug/TemporaryGeneratedFi
 samples/applications/iot-smart-grid/WinFormsClient/bin/Release/Client.exe.config
 samples/databases/wide-world-importers/workload-drivers/order-insert/MultithreadedOrderInsert/bin/Release/MultithreadedOrderInsert.exe.config
 samples/databases/wide-world-importers/workload-drivers/order-insert/MultithreadedOrderInsert/obj/Debug/MultithreadedInMemoryTableInsert.MultithreadedOrderInsertMain.resources
+*.pyc
+samples/features/machine-learning-services/python/getting-started/rental-prediction/rental_prediction_debug.py

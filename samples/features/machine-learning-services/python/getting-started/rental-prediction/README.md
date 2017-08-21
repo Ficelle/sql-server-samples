@@ -94,7 +94,6 @@ net stop "SQL Server Launchpad (MSSQLSERVER)"
 net stop "SQL Server (MSSQLSERVER)"
 net start "SQL Server (MSSQLSERVER)"
 net start "SQL Server Launchpad (MSSQLSERVER)"
-
 ```
 (*) 環境に応じてインスタンス名を変更してください。またSQL Server AgentサービスなどSQL Serverサービスに依存するサービスがある場合には明示的に再開してください。
 
