@@ -58,7 +58,7 @@ LendingClub 社(貸付型クラウドファンディング事業者)が公開し
 このCSVファイルには、現在のローンステータス（借入中、遅れ、完済など）や最新の支払い情報を含む、発行されたすべてのローンの完全なデータが含まれています。
 ### サンプルコード
 
-* [Create Database.sql]('Create Database.sql')
+* [CreateDatabase.sql]('CreateDatabase.sql')
 このチュートリアルに必要な各種データベースオブジェクトを作成します。
 
 * [ImportCSVData.ps1](ImportCSVData.ps1)
@@ -83,11 +83,11 @@ Rにデータをロードしディシジョンフォレストによるモデル�
 
 ### STEP 1. データベースオブジェクトの作成
 
-SSMSから[Create Database.sql](Create Database.sql)を実行し、データベースオブジェクトを作成します。
+SSMSから[CreateDatabase.sql](CreateDatabase.sql)を実行し、データベースオブジェクトを作成します。
 
 (*)データベースのデータファイルおよびトランザクションログは`C:\Tiger\DATA`に作成するよう記述されています。環境に応じて適宜変更してください。
 
-```SQL:Create Database.sql（抜粋）
+```SQL:CreateDatabase.sql（抜粋）
 CREATE DATABASE [LendingClub]
  CONTAINMENT = NONE
  ON  PRIMARY 
