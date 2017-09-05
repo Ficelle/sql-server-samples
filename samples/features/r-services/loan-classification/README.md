@@ -58,7 +58,7 @@ LendingClub 社(貸付型クラウドファンディング事業者)が公開し
 このCSVファイルには、現在のローンステータス（借入中、遅れ、完済など）や最新の支払い情報を含む、発行されたすべてのローンの完全なデータが含まれています。
 ### サンプルコード
 
-* [Create Database.sql]("Create Database.sql")
+* [Create Database.sql]('Create Database.sql')
 このチュートリアルに必要な各種データベースオブジェクトを作成します。
 
 * [ImportCSVData.ps1](ImportCSVData.ps1)
