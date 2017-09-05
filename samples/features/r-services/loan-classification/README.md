@@ -58,13 +58,13 @@ LendingClub 社(貸付型クラウドファンディング事業者)が公開し
 このCSVファイルには、現在のローンステータス（借入中、遅れ、完済など）や最新の支払い情報を含む、発行されたすべてのローンの完全なデータが含まれています。
 ### サンプルコード
 
-* [CreateDatabase.sql]('CreateDatabase.sql')
+* [CreateDatabase.sql](CreateDatabase.sql)
 このチュートリアルに必要な各種データベースオブジェクトを作成します。
 
 * [ImportCSVData.ps1](ImportCSVData.ps1)
 ダウンロードしたサンプルデータをDBにインポートします。
 
-* [Create Columnstore Index.sql](Create Columnstore Index.sql)
+* [CreateColumnstoreIndex.sql](CreateColumnstoreIndex.sql)
 DBにインポートしたサンプルデータをメモリ最適化列ストア構造に変換します。
 
 * [Create Model.sql](Create Model.sql)
@@ -160,9 +160,9 @@ $LogPath = "C:\Tiger\Logs\" # TODO: Change the path of the log folder
 
 ### STEP 3. インポートデータをメモリ最適化列ストア構造に変換
 
-[Create Columnstore Index.sql](Create Columnstore Index.sql)を実行し、機械学習による前処理の効率化のためにインポートデータをメモリ最適化列ストア構造に変換します。
+[CreateColumnstoreIndex.sql](CreateColumnstoreIndex.sql)を実行し、機械学習による前処理の効率化のためにインポートデータをメモリ最適化列ストア構造に変換します。
 
-```SQL:Create Columnstore Index.sql
+```SQL:CreateColumnstoreIndex.sql
 CREATE NONCLUSTERED COLUMNSTORE INDEX [ncci_LoanStats] ON [dbo].[LoanStats]
 (
 	[revol_util],
