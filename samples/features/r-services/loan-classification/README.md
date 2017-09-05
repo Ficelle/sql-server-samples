@@ -12,6 +12,8 @@
 4. トレーニング済みモデルを利用しWhat-If分析を行い、結果をメモリ最適化行ストア構造に格納する（機械学習による後処理の効率化）
 5. 分析結果をPower BIで可視化する
 
+![architecture](media/architecture.png "architecture")
+
 ## はじめに
 
 ### ソフトウェア要件
