@@ -1,43 +1,43 @@
-# SQL Server 2017 Machine Learning Services �ɂ��ݓ|���p�x����What-If����
+# SQL Server 2017 Machine Learning Services による貸倒償却度合のWhat-If分析
 
-## �V�i���I
+## シナリオ
 
-���[���f�[�^�����f�������A�ݕt�������㏸�������ꍇ�̑ݓ|���p�x���̕ω��ɂ���What-If���͂��s���܂��B
+ローンデータをモデル化し、貸付金利を上昇させた場合の貸倒償却度合の変化についてWhat-If分析を行います。
 
-## �V�X�e���A�[�L�e�N�`��
+## システムアーキテクチャ
 
-1. ���[���f�[�^��DB�ɃC���|�[�g
-2. DB�Ɏ�荞�񂾃��[���f�[�^���������œK����X�g�A�\���ɕϊ�����i�@�B�w�K�ɂ��O�����̌������j
-3. R�Ƀf�[�^�����[�h���f�B�V�W�����t�H���X�g�ɂ�郂�f���g���[�j���O�����s����
-4. �g���[�j���O�ς݃��f���𗘗p��What-If���͂��s���A���ʂ��������œK���s�X�g�A�\���Ɋi�[����i�@�B�w�K�ɂ��㏈���̌������j
-5. ���͌��ʂ�Power BI�ŉ�������
+1. ローンデータをDBにインポート
+2. DBに取り込んだローンデータをメモリ最適化列ストア構造に変換する（機械学習による前処理の効率化）
+3. Rにデータをロードしディシジョンフォレストによるモデルトレーニングを実行する
+4. トレーニング済みモデルを利用しWhat-If分析を行い、結果をメモリ最適化行ストア構造に格納する（機械学習による後処理の効率化）
+5. 分析結果をPower BIで可視化する
 
 ![architecture](media/architecture.png "architecture")
 
-## �͂��߂�
+## はじめに
 
-### �\�t�g�E�F�A�v��
+### ソフトウェア要件
 
 * [SQL Server 2017](https://www.microsoft.com/en-us/sql-server/sql-server-2017)
 * [SQL Server Management Studio](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms)
-* [Power BI Desktop�i�p��Łj](https://powerbi.microsoft.com/en-us/desktop/) 
+* [Power BI Desktop（英語版）](https://powerbi.microsoft.com/en-us/desktop/) 
 
-(*) Power BI Desktop �p��ł�p�ӂ��Ă��������i�T���v���f�[�^���̈ʒu�f�[�^�i�A�����J�̏B�̗��̃f�[�^�j�����{��ł�BingMap�n�}�Ƀ}�b�s���O���ł��Ȃ����߁j�B
+(*) Power BI Desktop 英語版を用意してください（サンプルデータ内の位置データ（アメリカの州の略称データ）が日本語版のBingMap地図にマッピングができないため）。
 
-### SQL Server �̎��O�ݒ�
+### SQL Server の事前設定
 
-- SQL Server 2017��Database Engine Services�����Machine Learning Services�iIn-Database�j��R���C���X�g�[�����Ă��������B
+- SQL Server 2017のDatabase Engine ServicesおよびMachine Learning Services（In-Database）のRをインストールしてください。
 
-- SQL Server 2017 ����R���s����ɂ�sp_configure��external scripts enabled�̐ݒ�ύX���K�v�ł��B�܂�external scripts enabled�p�����[�^�͐ݒ�ύX�̔��f��SQL Server 2017�̍ċN�����K�v�ł��B
+- SQL Server 2017 内でR実行するにはsp_configureでexternal scripts enabledの設定変更が必要です。またexternal scripts enabledパラメータは設定変更の反映にSQL Server 2017の再起動が必要です。
 
-    - 1.�O���X�N���v�g���s�@�\�̗L����
+    - 1.外部スクリプト実行機能の有効化
 
 
         ```SQL:T-SQL
         EXEC sp_configure 'external scripts enabled', 1;
         ```
 
-    - 2.SQL Server 2017�̍ċN��
+    - 2.SQL Server 2017の再起動
 
         ```cmd:cmd
         net stop "SQL Server Launchpad (MSSQLSERVER)"
@@ -46,48 +46,48 @@
         net start "SQL Server Launchpad (MSSQLSERVER)"
         ```
 
-        net�R�}���h�ɓn���C���X�^���X���͊��ɉ����ĕύX���Ă��������B�܂�SQL Server Agent�T�[�r�X�Ȃ�SQL Server�T�[�r�X�Ɉˑ�����T�[�r�X������ꍇ�ɂ͖����I�ɍĊJ���Ă��������B
+        netコマンドに渡すインスタンス名は環境に応じて変更してください。またSQL Server AgentサービスなどSQL Serverサービスに依存するサービスがある場合には明示的に再開してください。
 
-### �T���v���f�[�^
+### サンプルデータ
 
-LendingClub ��(�ݕt�^�N���E�h�t�@���f�B���O���Ǝ�)�����J���Ă��郍�[���f�[�^�𗘗p���܂��B
+LendingClub 社(貸付型クラウドファンディング事業者)が公開しているローンデータを利用します。
 
-�f�[�^�_�E�����[�h�T�C�g�֍s���A�uDOWNLOAD LOAN DATA�v������Ԃ�I������CSV�t�@�C���Ƃ��ă_�E�����[�h���܂��B
-��葽���̊��Ԃ𗘗p����̂��]�܂����ł��B���̋L���ŏЉ��f���́u2007-2011�v�`�u2017 Q2�v�܂ł̃f�[�^���_�E�����[�h���Ă��܂��B
+データダウンロードサイトへ行き、「DOWNLOAD LOAN DATA」から期間を選択してCSVファイルとしてダウンロードします。
+より多くの期間を利用するのが望ましいです。この記事で紹介するデモは「2007-2011」～「2017 Q2」までのデータをダウンロードしています。
 
-����CSV�t�@�C���ɂ́A���݂̃��[���X�e�[�^�X�i�ؓ����A�x��A���ςȂǁj��ŐV�̎x���������܂ށA���s���ꂽ���ׂẴ��[���̊��S�ȃf�[�^���܂܂�Ă��܂��B
-### �T���v���R�[�h
+このCSVファイルには、現在のローンステータス（借入中、遅れ、完済など）や最新の支払い情報を含む、発行されたすべてのローンの完全なデータが含まれています。
+### サンプルコード
 
 * [Create Database.sql](Create Database.sql)
-���̃`���[�g���A���ɕK�v�Ȋe��f�[�^�x�[�X�I�u�W�F�N�g���쐬���܂��B
+このチュートリアルに必要な各種データベースオブジェクトを作成します。
 
 * [ImportCSVData.ps1](ImportCSVData.ps1)
-�_�E�����[�h�����T���v���f�[�^��DB�ɃC���|�[�g���܂��B
+ダウンロードしたサンプルデータをDBにインポートします。
 
 * [Create Columnstore Index.sql](Create Columnstore Index.sql)
-DB�ɃC���|�[�g�����T���v���f�[�^���������œK����X�g�A�\���ɕϊ����܂��B
+DBにインポートしたサンプルデータをメモリ最適化列ストア構造に変換します。
 
 * [Create Model.sql](Create Model.sql)
-R�Ƀf�[�^�����[�h���f�B�V�W�����t�H���X�g�ɂ�郂�f���g���[�j���O�����s���܂��B
+Rにデータをロードしディシジョンフォレストによるモデルトレーニングを実行します。
 
 * [ScoreLoans.ps1](ScoreLoans.ps1)
-�ݕt����������ێ������ꍇ�̑ݕt�]���̃X�R�A�����O���s���܂��B
+貸付金利を現状維持した場合の貸付評価のスコアリングを行います。
 
 * [WhatIf.ps1](WhatIf.ps1)
-�ݕt������ϓ������ꍇ�̑ݕt�]���̃X�R�A�����O���s���܂��B
+貸付金利を変動した場合の貸付評価のスコアリングを行います。
 
 * [Loan Status.pbix](Loan Status.pbix)
-�ݕt����������ێ������ꍇ�ƕϓ������ꍇ���ꂼ��̑ݕt�]�������|�[�g�������ϓ��̉e�����������܂��B
+貸付金利を現状維持した場合と変動した場合それぞれの貸付評価をレポートし金利変動の影響を可視化します。
 
-## �`���[�g���A��
+## チュートリアル
 
-### STEP 1. �f�[�^�x�[�X�I�u�W�F�N�g�̍쐬
+### STEP 1. データベースオブジェクトの作成
 
-SSMS����[Create Database.sql](Create Database.sql)�����s���A�f�[�^�x�[�X�I�u�W�F�N�g���쐬���܂��B
+SSMSから[Create Database.sql](Create Database.sql)を実行し、データベースオブジェクトを作成します。
 
-(*)�f�[�^�x�[�X�̃f�[�^�t�@�C������уg�����U�N�V�������O��`C:\Tiger\DATA`�ɍ쐬����悤�L�q����Ă��܂��B���ɉ����ēK�X�ύX���Ă��������B
+(*)データベースのデータファイルおよびトランザクションログは`C:\Tiger\DATA`に作成するよう記述されています。環境に応じて適宜変更してください。
 
-```SQL:Create Database.sql�i�����j
+```SQL:Create Database.sql（抜粋）
 CREATE DATABASE [LendingClub]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -99,52 +99,52 @@ CREATE DATABASE [LendingClub]
 GO
 ```
 
-����SQL��������I������ƈȉ��̃I�u�W�F�N�g���쐬����܂��B
+このSQL文が正常終了すると以下のオブジェクトが作成されます。
 
-|�I�u�W�F�N�g���|�I�u�W�F�N�g��|����|
+|オブジェクト種別|オブジェクト名|説明|
 |:---|:---|:---|
-|DATABASE|LendingClub|�`���[�g���A���Ɏg�p����f�[�^�x�[�X|
-|TABLE|LoanStatsStaging|�T���v���f�[�^�C���|�[�g�p�̃X�e�[�W���O�e�[�u��|
-|TABLE|LoanStats|�@�B�w�K�̑ΏۂƂȂ郍�[���f�[�^|
-|TABLE|models|�g���[�j���O�ς݃��f�����i�[����e�[�u��|
-|TABLE|LoanStatsPredictions|�ݕt����������ێ������ꍇ�̑ݕt�]���X�R�A���i�[����e�[�u��|
-|TABLE|LoanPredictionsWhatIf|�ݕt������ϓ������ꍇ�̑ݕt�]���X�R�A���i�[����e�[�u��|
-|TABLE|WhatIf|What-If���͂̂��߂Ɏw�肵���ݕt�����̈����グ�����i�[����e�[�u��|
-|TABLE|RunTimeStats|���s���Ԃ��L�^���邽�߂̃e�[�u��|
-|PROCEDURE|PerformETL|�T���v���f�[�^��ETL�����s����v���V�[�W��|
-|PROCEDURE|TrainLoansModel|�f�B�V�W�����t�H���X�g�ɂ�郂�f���g���[�j���O�����s����v���V�[�W��|
-|PROCEDURE|ScoreLoans|�ݕt����������ێ������ꍇ�̑ݕt�]���̃X�R�A�����O���s���v���V�[�W��|
-|PROCEDURE|ScoreLoansWhatIf|�ݕt������ϓ������ꍇ�̑ݕt�]���̃X�R�A�����O���s���v���V�[�W��|
+|DATABASE|LendingClub|チュートリアルに使用するデータベース|
+|TABLE|LoanStatsStaging|サンプルデータインポート用のステージングテーブル|
+|TABLE|LoanStats|機械学習の対象となるローンデータ|
+|TABLE|models|トレーニング済みモデルを格納するテーブル|
+|TABLE|LoanStatsPredictions|貸付金利を現状維持した場合の貸付評価スコアを格納するテーブル|
+|TABLE|LoanPredictionsWhatIf|貸付金利を変動した場合の貸付評価スコアを格納するテーブル|
+|TABLE|WhatIf|What-If分析のために指定した貸付金利の引き上げ率を格納するテーブル|
+|TABLE|RunTimeStats|実行時間を記録するためのテーブル|
+|PROCEDURE|PerformETL|サンプルデータのETLを実行するプロシージャ|
+|PROCEDURE|TrainLoansModel|ディシジョンフォレストによるモデルトレーニングを実行するプロシージャ|
+|PROCEDURE|ScoreLoans|貸付金利を現状維持した場合の貸付評価のスコアリングを行うプロシージャ|
+|PROCEDURE|ScoreLoansWhatIf|貸付金利を変動した場合の貸付評価のスコアリングを行うプロシージャ|
 
 ![step1-1](media/step1-1.png "step1-1")
 
-### STEP 2. �T���v���f�[�^�̃C���|�[�g��ETL����
+### STEP 2. サンプルデータのインポートとETL処理
 
-PowerShell����[ImportCSVData.ps1](ImportCSVData.ps1)�����s���A�T���v���f�[�^���C���|�[�g���܂��B
+PowerShellから[ImportCSVData.ps1](ImportCSVData.ps1)を実行し、サンプルデータをインポートします。
 
-```PowerShell:ImportCSVData.ps1�̏����̗���
-CSV�t�@�C�����i�[�����t�H���_�z����CSV�t�@�C����Foreach�Ŏ��o�� {
-    ���o����CSV�t�@�C�����̂P���R�[�h��Foreach�Ŏ��o�� {
-        ���o�����P���R�[�h��LoanStatsStaging�e�[�u����INSERT
+```PowerShell:ImportCSVData.ps1の処理の流れ
+CSVファイルを格納したフォルダ配下のCSVファイルをForeachで取り出し {
+    取り出したCSVファイル内の１レコードをForeachで取り出し {
+        取り出した１レコードをLoanStatsStagingテーブルへINSERT
     }
-    PerformETL�v���V�[�W�����Ăяo�� {
-        LoanStatsStaging�e�[�u���̃f�[�^�����H����LoanStats�e�[�u���ɓ]��
-        LoanStats�e�[�u���̃f�[�^�ɑ΂��ē������o���� {
-            IF (loan_status��l���uLate (16-30 days)�v�uLate (31-120 days)�v�uDefault�v�uCharged Off�v)
-                is_bad(�ݕt�]��) = 1
+    PerformETLプロシージャを呼び出し {
+        LoanStatsStagingテーブルのデータを加工してLoanStatsテーブルに転送
+        LoanStatsテーブルのデータに対して特徴抽出処理 {
+            IF (loan_status列値が「Late (16-30 days)」「Late (31-120 days)」「Default」「Charged Off」)
+                is_bad(貸付評価) = 1
             ELSE
-                is_bad(�ݕt�]��) = 0
+                is_bad(貸付評価) = 0
         }
-        LoanStatsStaging�e�[�u����DELETE
+        LoanStatsStagingテーブルをDELETE
     }
 }
 ```
 
 ![step2-1](media/step2-1.png "step2-1")
 
-(*)DB�ւ̐ڑ����ACSV�t�@�C�����i�[�����t�H���_`C:\Tiger\Extract\`�A���O���o�͂���t�H���_'C:\Tiger\Logs\'�͊��ɉ����ēK�X�ύX���Ă��������B
+(*)DBへの接続情報、CSVファイルを格納したフォルダ`C:\Tiger\Extract\`、ログを出力するフォルダ'C:\Tiger\Logs\'は環境に応じて適宜変更してください。
 
-```SQL:ImportCSVData.ps1�i�����j
+```SQL:ImportCSVData.ps1（抜粋）
 # Connection Info
 $SqlServer = "." # TODO: Change the name of SQL Server instance name
 $dbName = "LendingClub" # TODO: Change the name of the database
@@ -156,11 +156,11 @@ $files = ls C:\Tiger\Extract\*.csv # TODO: Change the path to the appropriate lo
 $LogPath = "C:\Tiger\Logs\" # TODO: Change the path of the log folder
 ```
 
-(*)PowerShell���Ŏ��s���Ă���Invoke-Sqlcmd�̊���̃^�C���A�E�g�l�i30�b�j�����ɂȂ�ꍇ�͓K�X�ύX���Ă��������B
+(*)PowerShell内で実行しているInvoke-Sqlcmdの既定のタイムアウト値（30秒）が問題になる場合は適宜変更してください。
 
-### STEP 3. �C���|�[�g�f�[�^���������œK����X�g�A�\���ɕϊ�
+### STEP 3. インポートデータをメモリ最適化列ストア構造に変換
 
-[Create Columnstore Index.sql](Create Columnstore Index.sql)�����s���A�@�B�w�K�ɂ��O�����̌������̂��߂ɃC���|�[�g�f�[�^���������œK����X�g�A�\���ɕϊ����܂��B
+[Create Columnstore Index.sql](Create Columnstore Index.sql)を実行し、機械学習による前処理の効率化のためにインポートデータをメモリ最適化列ストア構造に変換します。
 
 ```SQL:Create Columnstore Index.sql
 CREATE NONCLUSTERED COLUMNSTORE INDEX [ncci_LoanStats] ON [dbo].[LoanStats]
@@ -178,75 +178,75 @@ CREATE NONCLUSTERED COLUMNSTORE INDEX [ncci_LoanStats] ON [dbo].[LoanStats]
 
 ![step3-1](media/step3-1.png "step3-1")
 
-### STEP 4. �f�B�V�W�����t�H���X�g�ɂ�郂�f���g���[�j���O
+### STEP 4. ディシジョンフォレストによるモデルトレーニング
 
-[Create Model.sql](Create Model.sql)�����s���AR�Ƀf�[�^�����[�h���f�B�V�W�����t�H���X�g�ɂ�郂�f���g���[�j���O�����s���A�g���[�j���O�ς݃��f����model�e�[�u���Ɋi�[���܂��B
+[Create Model.sql](Create Model.sql)を実行し、Rにデータをロードしディシジョンフォレストによるモデルトレーニングを実行し、トレーニング済みモデルをmodelテーブルに格納します。
 
-Create Model.sql���ŌĂяo����Ă���TrainLoansModel�v���V�[�W���������̎��̂ł��B�g���[�j���O�̂��߂̃f�[�^�Z�b�g��LoanStats�e�[�u����75���T���v�����O�ł��B
+Create Model.sql内で呼び出されているTrainLoansModelプロシージャが処理の実体です。トレーニングのためのデータセットはLoanStatsテーブルの75％サンプリングです。
 
 ![step4-1](media/step4-1.png "step4-1")
 
-### STEP 5. �ݕt����������ێ������ꍇ�̑ݕt�]���̃X�R�A�����O
+### STEP 5. 貸付金利を現状維持した場合の貸付評価のスコアリング
 
-[ScoreLoans.ps1](ScoreLoans.ps1)�����s���A�ݕt����������ێ������ꍇ�̑ݕt�]���̃X�R�A�����O���s���܂��B
+[ScoreLoans.ps1](ScoreLoans.ps1)を実行し、貸付金利を現状維持した場合の貸付評価のスコアリングを行います。
 
-ScoreLoans.ps1���ŌĂяo����Ă���ScoreLoans�v���V�[�W���������̎��̂ł��BSTEP 4�ō쐬�������f���𗘗p���ALoanStats�e�[�u���̃f�[�^�ɑ΂���ݕt�]���̃X�R�A�����O���s���A���ʂ�LoanStatsPredictions�C���������e�[�u���Ɋi�[���܂��B
+ScoreLoans.ps1内で呼び出されているScoreLoansプロシージャが処理の実体です。STEP 4で作成したモデルを利用し、LoanStatsテーブルのデータに対する貸付評価のスコアリングを行い、結果をLoanStatsPredictionsインメモリテーブルに格納します。
 
 ![step5-1](media/step5-1.png "step5-1")
 
 ![step5-2](media/step5-2.png "step5-2")
 
-(*)DB�ւ̐ڑ����͊��ɉ����ēK�X�ύX���Ă��������B
+(*)DBへの接続情報は環境に応じて適宜変更してください。
 
-```SQL:ScoreLoans.ps1�i�����j
+```SQL:ScoreLoans.ps1（抜粋）
 $SqlServer = "."  # TODO: Change the name of SQL Server instance name
 $dbName = "LendingClub" # TODO: Change the name of the database
 ```
 
-(*)�X�R�A�����O�͕�����s�i�ΏۂƂ��郌�R�[�h�͈̔͂��Ƃɕ��S�����j���Ă��܂��B�������d�x��WRITE���s���悤�ȃ��[�N���[�h�ɑ΂��ăC���������e�[�u���̗��p�͓K���Ă��܂��B�����SETP 7.�̉����ɔ���READ�Ƃ̕�����s�ɂ����Ă����l�ł��B
+(*)スコアリングは並列実行（対象とするレコードの範囲ごとに分担処理）しています。高い多重度でWRITEを行うようなワークロードに対してインメモリテーブルの利用は適しています。さらにSETP 7.の可視化に伴うREADとの並列実行においても同様です。
 
-### STEP 6. �ݕt������ϓ������ꍇ�̑ݕt�]���̃X�R�A�����O
+### STEP 6. 貸付金利を変動した場合の貸付評価のスコアリング
 
-[WhatIf.ps1](WhatIf.ps1)�����s���A�ݕt����������ێ������ꍇ�̑ݕt�]���̃X�R�A�����O���s���܂��B
+[WhatIf.ps1](WhatIf.ps1)を実行し、貸付金利を現状維持した場合の貸付評価のスコアリングを行います。
 
-WhatIf.ps1�͕ϓ�������ݕt������Θb�^�Ŏ󂯎��i�����グ�������P�ʂŎw�肵�Ă��������j�A�����̎��̂ƂȂ�ScoreLoansWhatIf�v���V�[�W���ɓn���܂��B
-ScoreLoansWhatIf��STEP 4�ō쐬�������f���𗘗p���A�ݕt������ϓ�������LoanStats�e�[�u���̃f�[�^�ɑ΂��đݕt�]���̃X�R�A�����O���s���A���ʂ�LoanPredictionsWhatIf�C���������e�[�u���Ɋi�[���܂��B
+WhatIf.ps1は変動させる貸付金利を対話型で受け取り（引き上げ率を％単位で指定してください）、処理の実体となるScoreLoansWhatIfプロシージャに渡します。
+ScoreLoansWhatIfはSTEP 4で作成したモデルを利用し、貸付金利を変動させたLoanStatsテーブルのデータに対して貸付評価のスコアリングを行い、結果をLoanPredictionsWhatIfインメモリテーブルに格納します。
 
 ![step6-1](media/step6-1.png "step6-1")
 
 ![step6-2](media/step6-2.png "step6-2")
 
-(*)DB�ւ̐ڑ����͊��ɉ����ēK�X�ύX���Ă��������B
+(*)DBへの接続情報は環境に応じて適宜変更してください。
 
-```SQL:WhatIf.ps1�i�����j
+```SQL:WhatIf.ps1（抜粋）
 $SqlServer = "."  # TODO: Change the name of SQL Server instance name
 $dbName = "LendingClub" # TODO: Change the name of the database
 ```
 
-(*)�X�R�A�����O�͕�����s�i�ΏۂƂ��郌�R�[�h�͈̔͂��Ƃɕ��S�����j���Ă��܂��B�������d�x��WRITE���s���悤�ȃ��[�N���[�h�ɑ΂��ăC���������e�[�u���̗��p�͓K���Ă��܂��B�����SETP 7.�̉����ɔ���READ�Ƃ̕�����s�ɂ����Ă����l�ł��B
+(*)スコアリングは並列実行（対象とするレコードの範囲ごとに分担処理）しています。高い多重度でWRITEを行うようなワークロードに対してインメモリテーブルの利用は適しています。さらにSETP 7.の可視化に伴うREADとの並列実行においても同様です。
 
-### STEP 7. �����ϓ��ɂ��e���̉���
+### STEP 7. 金利変動による影響の可視化
 
-�ȉ��̎菇�őݕt����������ێ������ꍇ�ƕϓ������ꍇ���ꂼ��̑ݕt�]�������|�[�g�������ϓ��̉e�����������܂��B
+以下の手順で貸付金利を現状維持した場合と変動した場合それぞれの貸付評価をレポートし金利変動の影響を可視化します。
 
-1. [Loan Status.pbix](Loan Status.pbix)���J��
-2. �ڑ�����K�X�ύX����
-    Menu -> Home -> Edit Queries -> Data Source Settings -> �f�[�^�x�[�X�̃A�C�R����I�� -> Change Source... ��Server��Database��K�X�C�����܂��B
+1. [Loan Status.pbix](Loan Status.pbix)を開く
+2. 接続情報を適宜変更する
+    Menu -> Home -> Edit Queries -> Data Source Settings -> データベースのアイコンを選択 -> Change Source... でServerとDatabaseを適宜修正します。
     
     ![step7-1](media/step7-1.png "step7-1")
     ![step7-2](media/step7-2.png "step7-2")
 
-3. [State Codes.xlsx](State Codes.xlsx)�i�B���Ɨ��̂̃}�b�s���O�j�̃t�@�C���p�X��K�X�ύX����
+3. [State Codes.xlsx](State Codes.xlsx)（州名と略称のマッピング）のファイルパスを適宜変更する
 
-    Menu -> Home -> Edit Queries -> Data Source Settings -> �t�@�C���̃A�C�R����I�� -> Change Source... ��File path��K�X�C�����܂��B
+    Menu -> Home -> Edit Queries -> Data Source Settings -> ファイルのアイコンを選択 -> Change Source... でFile pathを適宜修正します。
 
     ![step7-3](media/step7-3.png "step7-3")
 
     ![step7-4](media/step7-4.png "step7-4")
 
-4. �f�[�^�����t���b�V�����ŐV�̃f�[�^���C���|�[�g����
+4. データをリフレッシュし最新のデータをインポートする
 
-    �ȉ��̃e�[�u���ɂ��Ă͎蓮�X�V�iFields -> �Ώۂ̃e�[�u�����E�N���b�N -> Refresh data�j���s���܂��B
+    以下のテーブルについては手動更新（Fields -> 対象のテーブルを右クリック -> Refresh data）を行います。
 
     * BasePrediction
     * Branch
@@ -256,63 +256,63 @@ $dbName = "LendingClub" # TODO: Change the name of the database
 
     ![step7-5](media/step7-5.png "step7-5")
 
-    (*) ��L�̓��|�[�g�̃��t���b�V���̑ΏۊO�ɐݒ肵�Ă��邽�߂Ɏ蓮�X�V���K�v�ł��B
+    (*) 上記はレポートのリフレッシュの対象外に設定しているために手動更新が必要です。
 
-    �ȉ��ɂ��Ă̓��|�[�g�̃��t���b�V���iMenu -> Home -> Refresh�j�ɂ���Ď����X�V���s���܂��B
+    以下についてはレポートのリフレッシュ（Menu -> Home -> Refresh）によって自動更新を行います。
 
     * Rate
     * WhatIf
 
-    What-If���͂̂��߂�STEP 6�����s����s�x���|�[�g�̃��t���b�V�����s���Ă��������B
+    What-If分析のためにSTEP 6を実行する都度レポートのリフレッシュを行ってください。
 
     ![step7-6-2](media/step7-6-2.png "step7-6-2")
 
     ![step7-6](media/step7-6.png "step7-6")
 
-5. ���|�[�g���Q�Ƃ���
+5. レポートを参照する
 
-Loan Status Power BI���|�[�g�͈ȉ��̂Q�̃��|�[�g���p�ӂ���Ă��܂��B
+Loan Status Power BIレポートは以下の２つのレポートが用意されています。
 
-* Current State�F���݂̃��[�����
+* Current State：現在のローン情報
 
     * Distribution by Loan Status
-    ���[����Ԃ��Ƃ̑ݕt���z���v���������ςݏグ���_�O���t
+    ローン状態ごとの貸付金額合計を示した積み上げ横棒グラフ
 
-    * ��L�̉E�ɂ���\�iExcel����̓]�L�j
-    �B�����s�A���[����Ԃ��ō\�������\�A���l�͑ݕt���z���v
+    * 上記の右にある表（Excelからの転記）
+    州名を行、ローン状態を列で構成した表、数値は貸付金額合計
 
     * Distribution by Loan Status across States
-    �B���Ƃ̃��[����Ԃ̊�����ݕt���z���v�Ŏ�����100���ςݏグ���_�O���t
+    州ごとのローン状態の割合を貸付金額合計で示した100％積み上げ横棒グラフ
 
     * Loan Distribution Map
-    ���[����Ԃ�"Current"�ɂȂ��Ă���A�B���Ƃ̑ݕt���z���v���������h�蕪���n�}
+    ローン状態が"Current"になっている、州ごとの貸付金額合計を示した塗り分け地図
 
     ![step7-7](media/step7-7.png "step7-7")
 
-* What-If�F�\���l�Ƌ��������鐔�l�ő�����������What-If����
+* What-If：予測値と金利をある数値で増加した時のWhat-If分析
 
     * ChargeOffProbability
-    �\�������ݓ|���p�x���������iHigh�F���X�N��ALow�F���X�N��j
+    予測した貸倒償却度合を示す（High：リスク大、Low：リスク低）
 
     * What-If Rate
-    What-If���͂Ŏw�肵���������������������J�[�h
+    What-If分析で指定した金利増加率を示したカード
 
-    * Predicted Charge-offs (�ݕt����������ێ������ꍇ�Ƒݕt������ϓ������ꍇ���ꂼ��)
-    ���[����Ԃ�"Current"�̑ݕt���z���v���������J�[�h
+    * Predicted Charge-offs (貸付金利を現状維持した場合と貸付金利を変動した場合それぞれ)
+    ローン状態が"Current"の貸付金額合計を示したカード
 
-    * Predicted Charge-offs by Credit Score (�ݕt����������ێ������ꍇ�Ƒݕt������ϓ������ꍇ���ꂼ��)
-    �B���Ƃ̑ݓ|���p�x���̍���̊������������n�}
+    * Predicted Charge-offs by Credit Score (貸付金利を現状維持した場合と貸付金利を変動した場合それぞれ)
+    州ごとの貸倒償却度合の高低の割合を示した地図
 
-    * Predicted Charge-offs (�ݕt����������ێ������ꍇ�Ƒݕt������ϓ������ꍇ���ꂼ��)
-    ���[����Ԃ�"Current"�́A�B���Ƃ̑ݕt���z���v��ݓ|���p�x���̊����Ŏ�����100���ςݏグ�c�_�O���t
+    * Predicted Charge-offs (貸付金利を現状維持した場合と貸付金利を変動した場合それぞれ)
+    ローン状態が"Current"の、州ごとの貸付金額合計を貸倒償却度合の割合で示した100％積み上げ縦棒グラフ
 
     ![step7-8](media/step7-8.png "step7-8")
 
-## �o�T
+## 出典
 
 [Loan Classification using SQL Server 2016 R Services](https://github.com/Microsoft/sql-server-samples/tree/master/samples/features/r-services/loan-classification)
 
-## �֘A
+## 関連
 
 [A walkthrough of Loan Classification using SQL Server 2016 R Services](https://blogs.msdn.microsoft.com/sql_server_team/a-walkthrough-of-loan-classification-using-sql-server-2016-r-services/)
 
