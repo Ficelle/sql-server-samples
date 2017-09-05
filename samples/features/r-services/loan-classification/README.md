@@ -52,8 +52,13 @@
 
 LendingClub 社(貸付型クラウドファンディング事業者)が公開しているローンデータを利用します。
 
-データダウンロードサイトへ行き、「DOWNLOAD LOAN DATA」から期間を選択してCSVファイルとしてダウンロードします。
+データの[ダウンロードサイト](https://www.lendingclub.com/info/download-data.action)へ行き、「DOWNLOAD LOAN DATA」から期間を選択してCSVファイルとしてダウンロードします。
+
+![data_download](media/data_download.png "data_download")
+
 より多くの期間を利用するのが望ましいです。この記事で紹介するデモは「2007-2011」～「2017 Q2」までのデータをダウンロードしています。
+
+![data_download2](media/data_download2.png "data_download2")
 
 このCSVファイルには、現在のローンステータス（借入中、遅れ、完済など）や最新の支払い情報を含む、発行されたすべてのローンの完全なデータが含まれています。
 ### サンプルコード
