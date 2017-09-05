@@ -58,32 +58,32 @@ LendingClub Ğ(‘İ•tŒ^ƒNƒ‰ƒEƒhƒtƒ@ƒ“ƒfƒBƒ“ƒO–‹ÆÒ)‚ªŒöŠJ‚µ‚Ä‚¢‚éƒ[ƒ“ƒf[ƒ^‚ğ—˜
 ‚±‚ÌCSVƒtƒ@ƒCƒ‹‚É‚ÍAŒ»İ‚Ìƒ[ƒ“ƒXƒe[ƒ^ƒXiØ“ü’†A’x‚êAŠ®Ï‚È‚Çj‚âÅV‚Ìx•¥‚¢î•ñ‚ğŠÜ‚ŞA”­s‚³‚ê‚½‚·‚×‚Ä‚Ìƒ[ƒ“‚ÌŠ®‘S‚Èƒf[ƒ^‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·B
 ### ƒTƒ“ƒvƒ‹ƒR[ƒh
 
-* [Create Database.sql]()
+* [Create Database.sql](Create Database.sql)
 ‚±‚Ìƒ`ƒ…[ƒgƒŠƒAƒ‹‚É•K—v‚ÈŠeíƒf[ƒ^ƒx[ƒXƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚Ü‚·B
 
-* [ImportCSVData.ps1]()
+* [ImportCSVData.ps1](ImportCSVData.ps1)
 ƒ_ƒEƒ“ƒ[ƒh‚µ‚½ƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğDB‚ÉƒCƒ“ƒ|[ƒg‚µ‚Ü‚·B
 
-* [Create Columnstore Index.sql]()
+* [Create Columnstore Index.sql](Create Columnstore Index.sql)
 DB‚ÉƒCƒ“ƒ|[ƒg‚µ‚½ƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğƒƒ‚ƒŠÅ“K‰»—ñƒXƒgƒA\‘¢‚É•ÏŠ·‚µ‚Ü‚·B
 
-* [Create Model.sql]()
+* [Create Model.sql](Create Model.sql)
 R‚Éƒf[ƒ^‚ğƒ[ƒh‚µƒfƒBƒVƒWƒ‡ƒ“ƒtƒHƒŒƒXƒg‚É‚æ‚éƒ‚ƒfƒ‹ƒgƒŒ[ƒjƒ“ƒO‚ğÀs‚µ‚Ü‚·B
 
-* [ScoreLoans.ps1]()
+* [ScoreLoans.ps1](ScoreLoans.ps1)
 ‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢‚Ü‚·B
 
-* [WhatIf.ps1]()
+* [WhatIf.ps1](WhatIf.ps1)
 ‘İ•t‹à—˜‚ğ•Ï“®‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢‚Ü‚·B
 
-* [Loan Status.pbix]()
+* [Loan Status.pbix](Loan Status.pbix)
 ‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Æ•Ï“®‚µ‚½ê‡‚»‚ê‚¼‚ê‚Ì‘İ•t•]‰¿‚ğƒŒƒ|[ƒg‚µ‹à—˜•Ï“®‚Ì‰e‹¿‚ğ‰Â‹‰»‚µ‚Ü‚·B
 
 ## ƒ`ƒ…[ƒgƒŠƒAƒ‹
 
 ### STEP 1. ƒf[ƒ^ƒx[ƒXƒIƒuƒWƒFƒNƒg‚Ìì¬
 
-SSMS‚©‚ç[Create Database.sql]()‚ğÀs‚µAƒf[ƒ^ƒx[ƒXƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚Ü‚·B
+SSMS‚©‚ç[Create Database.sql](Create Database.sql)‚ğÀs‚µAƒf[ƒ^ƒx[ƒXƒIƒuƒWƒFƒNƒg‚ğì¬‚µ‚Ü‚·B
 
 (*)ƒf[ƒ^ƒx[ƒX‚Ìƒf[ƒ^ƒtƒ@ƒCƒ‹‚¨‚æ‚Ñƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“ƒƒO‚Í`C:\Tiger\DATA`‚Éì¬‚·‚é‚æ‚¤‹Lq‚³‚ê‚Ä‚¢‚Ü‚·BŠÂ‹«‚É‰‚¶‚Ä“K‹X•ÏX‚µ‚Ä‚­‚¾‚³‚¢B
 
@@ -120,7 +120,7 @@ GO
 
 ### STEP 2. ƒTƒ“ƒvƒ‹ƒf[ƒ^‚ÌƒCƒ“ƒ|[ƒg‚ÆETLˆ—
 
-PowerShell‚©‚ç[ImportCSVData.ps1]()‚ğÀs‚µAƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğƒCƒ“ƒ|[ƒg‚µ‚Ü‚·B
+PowerShell‚©‚ç[ImportCSVData.ps1](ImportCSVData.ps1)‚ğÀs‚µAƒTƒ“ƒvƒ‹ƒf[ƒ^‚ğƒCƒ“ƒ|[ƒg‚µ‚Ü‚·B
 
 ```PowerShell:ImportCSVData.ps1‚Ìˆ—‚Ì—¬‚ê
 CSVƒtƒ@ƒCƒ‹‚ğŠi”[‚µ‚½ƒtƒHƒ‹ƒ_”z‰º‚ÌCSVƒtƒ@ƒCƒ‹‚ğForeach‚Åæ‚èo‚µ {
@@ -160,7 +160,7 @@ $LogPath = "C:\Tiger\Logs\" # TODO: Change the path of the log folder
 
 ### STEP 3. ƒCƒ“ƒ|[ƒgƒf[ƒ^‚ğƒƒ‚ƒŠÅ“K‰»—ñƒXƒgƒA\‘¢‚É•ÏŠ·
 
-[Create Columnstore Index.sql]()‚ğÀs‚µA‹@ŠBŠwK‚É‚æ‚é‘Oˆ—‚ÌŒø—¦‰»‚Ì‚½‚ß‚ÉƒCƒ“ƒ|[ƒgƒf[ƒ^‚ğƒƒ‚ƒŠÅ“K‰»—ñƒXƒgƒA\‘¢‚É•ÏŠ·‚µ‚Ü‚·B
+[Create Columnstore Index.sql](Create Columnstore Index.sql)‚ğÀs‚µA‹@ŠBŠwK‚É‚æ‚é‘Oˆ—‚ÌŒø—¦‰»‚Ì‚½‚ß‚ÉƒCƒ“ƒ|[ƒgƒf[ƒ^‚ğƒƒ‚ƒŠÅ“K‰»—ñƒXƒgƒA\‘¢‚É•ÏŠ·‚µ‚Ü‚·B
 
 ```SQL:Create Columnstore Index.sql
 CREATE NONCLUSTERED COLUMNSTORE INDEX [ncci_LoanStats] ON [dbo].[LoanStats]
@@ -180,7 +180,7 @@ CREATE NONCLUSTERED COLUMNSTORE INDEX [ncci_LoanStats] ON [dbo].[LoanStats]
 
 ### STEP 4. ƒfƒBƒVƒWƒ‡ƒ“ƒtƒHƒŒƒXƒg‚É‚æ‚éƒ‚ƒfƒ‹ƒgƒŒ[ƒjƒ“ƒO
 
-[Create Model.sql]()‚ğÀs‚µAR‚Éƒf[ƒ^‚ğƒ[ƒh‚µƒfƒBƒVƒWƒ‡ƒ“ƒtƒHƒŒƒXƒg‚É‚æ‚éƒ‚ƒfƒ‹ƒgƒŒ[ƒjƒ“ƒO‚ğÀs‚µAƒgƒŒ[ƒjƒ“ƒOÏ‚İƒ‚ƒfƒ‹‚ğmodelƒe[ƒuƒ‹‚ÉŠi”[‚µ‚Ü‚·B
+[Create Model.sql](Create Model.sql)‚ğÀs‚µAR‚Éƒf[ƒ^‚ğƒ[ƒh‚µƒfƒBƒVƒWƒ‡ƒ“ƒtƒHƒŒƒXƒg‚É‚æ‚éƒ‚ƒfƒ‹ƒgƒŒ[ƒjƒ“ƒO‚ğÀs‚µAƒgƒŒ[ƒjƒ“ƒOÏ‚İƒ‚ƒfƒ‹‚ğmodelƒe[ƒuƒ‹‚ÉŠi”[‚µ‚Ü‚·B
 
 Create Model.sql“à‚ÅŒÄ‚Ño‚³‚ê‚Ä‚¢‚éTrainLoansModelƒvƒƒV[ƒWƒƒ‚ªˆ—‚ÌÀ‘Ì‚Å‚·BƒgƒŒ[ƒjƒ“ƒO‚Ì‚½‚ß‚Ìƒf[ƒ^ƒZƒbƒg‚ÍLoanStatsƒe[ƒuƒ‹‚Ì75“ƒTƒ“ƒvƒŠƒ“ƒO‚Å‚·B
 
@@ -188,7 +188,7 @@ Create Model.sql“à‚ÅŒÄ‚Ño‚³‚ê‚Ä‚¢‚éTrainLoansModelƒvƒƒV[ƒWƒƒ‚ªˆ—‚ÌÀ‘Ì‚Å‚·
 
 ### STEP 5. ‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO
 
-[ScoreLoans.ps1]()‚ğÀs‚µA‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢‚Ü‚·B
+[ScoreLoans.ps1](ScoreLoans.ps1)‚ğÀs‚µA‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢‚Ü‚·B
 
 ScoreLoans.ps1“à‚ÅŒÄ‚Ño‚³‚ê‚Ä‚¢‚éScoreLoansƒvƒƒV[ƒWƒƒ‚ªˆ—‚ÌÀ‘Ì‚Å‚·BSTEP 4‚Åì¬‚µ‚½ƒ‚ƒfƒ‹‚ğ—˜—p‚µALoanStatsƒe[ƒuƒ‹‚Ìƒf[ƒ^‚É‘Î‚·‚é‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢AŒ‹‰Ê‚ğLoanStatsPredictionsƒCƒ“ƒƒ‚ƒŠƒe[ƒuƒ‹‚ÉŠi”[‚µ‚Ü‚·B
 
@@ -207,7 +207,7 @@ $dbName = "LendingClub" # TODO: Change the name of the database
 
 ### STEP 6. ‘İ•t‹à—˜‚ğ•Ï“®‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO
 
-[WhatIf.ps1]()‚ğÀs‚µA‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢‚Ü‚·B
+[WhatIf.ps1](WhatIf.ps1)‚ğÀs‚µA‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Ì‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢‚Ü‚·B
 
 WhatIf.ps1‚Í•Ï“®‚³‚¹‚é‘İ•t‹à—˜‚ğ‘Î˜bŒ^‚Åó‚¯æ‚èiˆø‚«ã‚°—¦‚ğ“’PˆÊ‚Åw’è‚µ‚Ä‚­‚¾‚³‚¢jAˆ—‚ÌÀ‘Ì‚Æ‚È‚éScoreLoansWhatIfƒvƒƒV[ƒWƒƒ‚É“n‚µ‚Ü‚·B
 ScoreLoansWhatIf‚ÍSTEP 4‚Åì¬‚µ‚½ƒ‚ƒfƒ‹‚ğ—˜—p‚µA‘İ•t‹à—˜‚ğ•Ï“®‚³‚¹‚½LoanStatsƒe[ƒuƒ‹‚Ìƒf[ƒ^‚É‘Î‚µ‚Ä‘İ•t•]‰¿‚ÌƒXƒRƒAƒŠƒ“ƒO‚ğs‚¢AŒ‹‰Ê‚ğLoanPredictionsWhatIfƒCƒ“ƒƒ‚ƒŠƒe[ƒuƒ‹‚ÉŠi”[‚µ‚Ü‚·B
@@ -229,14 +229,14 @@ $dbName = "LendingClub" # TODO: Change the name of the database
 
 ˆÈ‰º‚Ìè‡‚Å‘İ•t‹à—˜‚ğŒ»óˆÛ‚µ‚½ê‡‚Æ•Ï“®‚µ‚½ê‡‚»‚ê‚¼‚ê‚Ì‘İ•t•]‰¿‚ğƒŒƒ|[ƒg‚µ‹à—˜•Ï“®‚Ì‰e‹¿‚ğ‰Â‹‰»‚µ‚Ü‚·B
 
-1. [Loan Status.pbix]()‚ğŠJ‚­
+1. [Loan Status.pbix](Loan Status.pbix)‚ğŠJ‚­
 2. Ú‘±î•ñ‚ğ“K‹X•ÏX‚·‚é
     Menu -> Home -> Edit Queries -> Data Source Settings -> ƒf[ƒ^ƒx[ƒX‚ÌƒAƒCƒRƒ“‚ğ‘I‘ğ -> Change Source... ‚ÅServer‚ÆDatabase‚ğ“K‹XC³‚µ‚Ü‚·B
     
     ![step7-1](media/step7-1.png "step7-1")
     ![step7-2](media/step7-2.png "step7-2")
 
-3. [State Codes.xlsx]()iB–¼‚Æ—ªÌ‚Ìƒ}ƒbƒsƒ“ƒOj‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ“K‹X•ÏX‚·‚é
+3. [State Codes.xlsx](State Codes.xlsx)iB–¼‚Æ—ªÌ‚Ìƒ}ƒbƒsƒ“ƒOj‚Ìƒtƒ@ƒCƒ‹ƒpƒX‚ğ“K‹X•ÏX‚·‚é
 
     Menu -> Home -> Edit Queries -> Data Source Settings -> ƒtƒ@ƒCƒ‹‚ÌƒAƒCƒRƒ“‚ğ‘I‘ğ -> Change Source... ‚ÅFile path‚ğ“K‹XC³‚µ‚Ü‚·B
 
