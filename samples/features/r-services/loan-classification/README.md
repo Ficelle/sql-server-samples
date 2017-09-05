@@ -238,10 +238,13 @@ $dbName = "LendingClub" # TODO: Change the name of the database
 以下の手順で貸付金利を現状維持した場合と変動した場合それぞれの貸付評価をレポートし金利変動の影響を可視化します。
 
 1. [LoanStatus.pbix](LoanStatus.pbix)を開く
+
 2. 接続情報を適宜変更する
+
     Menu -> Home -> Edit Queries -> Data Source Settings -> データベースのアイコンを選択 -> Change Source... でServerとDatabaseを適宜修正します。
     
     ![step7-1](media/step7-1.png "step7-1")
+    
     ![step7-2](media/step7-2.png "step7-2")
 
 3. [StateCodes.xlsx](StateCodes.xlsx)（州名と略称のマッピング）のファイルパスを適宜変更する
@@ -279,7 +282,7 @@ $dbName = "LendingClub" # TODO: Change the name of the database
 
 5. レポートを参照する
 
-Loan Status Power BIレポートは以下の２つのレポートが用意されています。
+    Loan Status Power BIレポートは以下の２つのレポートが用意されています。
 
 * Current State：現在のローン情報
 
