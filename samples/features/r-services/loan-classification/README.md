@@ -67,7 +67,7 @@ LendingClub 社(貸付型クラウドファンディング事業者)が公開し
 * [CreateColumnstoreIndex.sql](CreateColumnstoreIndex.sql)
 DBにインポートしたサンプルデータをメモリ最適化列ストア構造に変換します。
 
-* [Create Model.sql](Create Model.sql)
+* [CreateModel.sql](CreateModel.sql)
 Rにデータをロードしディシジョンフォレストによるモデルトレーニングを実行します。
 
 * [ScoreLoans.ps1](ScoreLoans.ps1)
@@ -183,9 +183,9 @@ CREATE NONCLUSTERED COLUMNSTORE INDEX [ncci_LoanStats] ON [dbo].[LoanStats]
 
 ### STEP 4. ディシジョンフォレストによるモデルトレーニング
 
-[Create Model.sql](Create Model.sql)を実行し、Rにデータをロードしディシジョンフォレストによるモデルトレーニングを実行し、トレーニング済みモデルをmodelテーブルに格納します。
+[CreateModel.sql](CreateModel.sql)を実行し、Rにデータをロードしディシジョンフォレストによるモデルトレーニングを実行し、トレーニング済みモデルをmodelテーブルに格納します。
 
-Create Model.sql内で呼び出されているTrainLoansModelプロシージャが処理の実体です。トレーニングのためのデータセットはLoanStatsテーブルの75％サンプリングです。
+CreateModel.sql内で呼び出されているTrainLoansModelプロシージャが処理の実体です。トレーニングのためのデータセットはLoanStatsテーブルの75％サンプリングです。
 
 ![step4-1](media/step4-1.png "step4-1")
 
